@@ -1,8 +1,8 @@
-I'm working with:
-- Flask (For Rest Api)
-- Unit tests
-- SQLite (PostgreSQL in near future)
+Eu vou Utilizar:
+- Flask (Rest Api)
+- Testes Unitarios
+- SQLite (Posteriormente vou trocar por PostgreSQL)
 - Python
 
 
-I will post a TO-DO list in the next days :)
+Vou postar uma lista de metas nos próximos dias :)
