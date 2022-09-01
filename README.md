@@ -10,4 +10,4 @@ Vou postar uma lista de metas nos próximos dias :)
 
 | Diagrama UML do Banco |
 |:--:|
-|![space-1.jpg](https://user-images.githubusercontent.com/100642061/187113769-0a9a93d4-ecb5-4f37-a0e0-219bee0f29f6.png)|
+|![space-1.jpg](https://user-images.githubusercontent.com/100642061/187806265-c50a3c50-44cf-4b99-8e99-5677a0f7ed0b.png)|
