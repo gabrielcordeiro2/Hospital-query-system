@@ -5,7 +5,7 @@ Eu vou Utilizar:
 - Python
 
 
-Vou postar uma lista de metas nos próximos dias :)
+Vou fazendo commit quando tudo estiver ajustado, vou atualizando pra vocês :)
 
 
 | Diagrama UML do Banco |
