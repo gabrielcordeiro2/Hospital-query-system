@@ -1,7 +1,7 @@
 Eu vou Utilizar:
 - Flask (Rest Api)
 - Testes Unitarios
-- SQLite (Posteriormente vou trocar por PostgreSQL)
+- PostgreSQL
 - Python
 
 
