@@ -1,11 +1,14 @@
-from ..models import UserModel, PacienteModel, ConsultaModel, InternacaoModel
+from models import UserModel, PacienteModel, ConsultaModel, InternacaoModel
 from config import banco, sessionmaker
 from numpy.random import randint
+from dotenv import load_dotenv
 from faker import Faker
-import time
+from time import time
+from os import getenv
 
-start_time = time.time()
+start_time = time()
 fake = Faker()
+load_dotenv()
 
 def randomDate(start='-20y', end='now'):
     result = fake.date_between(
@@ -84,7 +87,7 @@ for _ in range(1000): # Internacoes
                                       modificado_em=modificado)
         internacoes.append(internacao1)
 
-url = 'postgresql://postgres:123@localhost:5432'
+url = getenv("DATABASE")
 engine = banco.create_engine(url, {})
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -100,5 +103,5 @@ session.commit()
 session.close()
 
 print("Sucesso !!!")
-delta_time = time.time() - start_time
+delta_time = time() - start_time
 print(f"A operação demorou {delta_time:.3f} segundos")
