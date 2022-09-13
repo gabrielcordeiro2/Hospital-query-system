@@ -12,6 +12,7 @@ class UserModel(Base):
     __tablename__ = 'funcionarios'
 
     id = Column(Integer, primary_key=True)
+    nome = Column(String(50), nullable=False)
     usuario = Column(String(10), nullable=False, unique=True)
     senha = Column(String(20), nullable=False)
     tipo = Column(Enum(UserType), nullable=False)
