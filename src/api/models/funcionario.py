@@ -1,4 +1,6 @@
-from config import banco
+from sqlalchemy import Column, Integer, String
+from sqlalchemy import Enum
+from config.database import Base
 import enum
 
 class UserType(enum.Enum):
@@ -6,10 +8,10 @@ class UserType(enum.Enum):
     enf_geral = "enf_geral"
     medico = "medico"
 
-class UserModel(banco.Model):
+class UserModel(Base):
     __tablename__ = 'funcionarios'
 
-    id = banco.Column(banco.Integer, primary_key=True)
-    usuario = banco.Column(banco.String(10), nullable=False, unique=True)
-    senha = banco.Column(banco.String(20), nullable=False)
-    tipo = banco.Column(banco.Enum(UserType), nullable=False)
+    id = Column(Integer, primary_key=True)
+    usuario = Column(String(10), nullable=False, unique=True)
+    senha = Column(String(20), nullable=False)
+    tipo = Column(Enum(UserType), nullable=False)

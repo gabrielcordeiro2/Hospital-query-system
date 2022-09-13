@@ -1,11 +1,13 @@
-from config import banco
+from sqlalchemy import Column, Integer, String, Date
+from config.database import Base
 
-class PacienteModel(banco.Model):
+class PacienteModel(Base):
     __tablename__ = 'pacientes'
 
-    id = banco.Column(banco.Integer, primary_key=True)
-    nome = banco.Column(banco.String(60))
-    cpf = banco.Column(banco.String(12), unique=True)
-    nascimento = banco.Column(banco.Date)
-    telefone = banco.Column(banco.String(12))
-    cartao_sus = banco.Column(banco.String(18))
+    id = Column(Integer, primary_key=True)
+    nome = Column(String(60))
+    cpf = Column(String(12))
+    nascimento = Column(Date)
+    telefone = Column(String(12))
+    cartao_sus = Column(String(18))
+

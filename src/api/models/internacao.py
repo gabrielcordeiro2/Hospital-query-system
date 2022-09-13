@@ -1,4 +1,6 @@
-from config import banco
+from sqlalchemy import Column, Integer, String, Text, DateTime
+from sqlalchemy import ForeignKey, Enum
+from config.database import Base
 import enum
 
 class StatusType(enum.Enum):
@@ -6,16 +8,16 @@ class StatusType(enum.Enum):
     observacao = "observacao"
     internado = "internado"
 
-class InternacaoModel(banco.Model):
+class InternacaoModel(Base):
     __tablename__ = 'internacoes'
 
-    id = banco.Column(banco.Integer, primary_key=True)
-    data_internacao = banco.Column(banco.DateTime)
-    paciente_id = banco.Column(banco.Integer, banco.ForeignKey('pacientes.id'))
-    medico_id = banco.Column(banco.Integer, banco.ForeignKey('funcionarios.id'))
-    alergia_medicamento = banco.Column(banco.String(30))
-    descricao = banco.Column(banco.Text)
-    status = banco.Column(banco.Enum(StatusType))
-    quarto = banco.Column(banco.String(3))
-    leito = banco.Column(banco.String(2))
-    modificado_em = banco.Column(banco.DateTime)
+    id = Column(Integer, primary_key=True)
+    data_internacao = Column(DateTime)
+    paciente_id = Column(Integer, ForeignKey('pacientes.id'))
+    medico_id = Column(Integer, ForeignKey('funcionarios.id'))
+    alergia_medicamento = Column(String(30))
+    descricao = Column(Text)
+    status = Column(Enum(StatusType))
+    quarto = Column(String(3))
+    leito = Column(String(2))
+    modificado_em = Column(DateTime)

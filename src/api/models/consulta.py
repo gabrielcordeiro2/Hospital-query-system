@@ -1,13 +1,15 @@
-from config import banco
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean
+from sqlalchemy import ForeignKey
+from config.database import Base
 
-class ConsultaModel(banco.Model):
+class ConsultaModel(Base):
     __tablename__ = 'consultas'
 
-    id = banco.Column(banco.Integer, primary_key=True)
-    data_consulta = banco.Column(banco.DateTime)
-    paciente_id = banco.Column(banco.Integer, banco.ForeignKey('pacientes.id'))
-    medico_id = banco.Column(banco.Integer, banco.ForeignKey('funcionarios.id'))
-    paciente_compareceu = banco.Column(banco.Boolean)
-    alergia_medicamento = banco.Column(banco.String(30))
-    descricao = banco.Column(banco.Text)
-    modificado_em = banco.Column(banco.DateTime)
+    id = Column(Integer, primary_key=True)
+    data_consulta = Column(DateTime)
+    paciente_id = Column(Integer, ForeignKey('pacientes.id'), nullable=False)
+    medico_id = Column(Integer, ForeignKey('funcionarios.id'))
+    paciente_compareceu = Column(Boolean)
+    alergia_medicamento = Column(String(30))
+    descricao = Column(Text)
+    modificado_em = Column(DateTime)
