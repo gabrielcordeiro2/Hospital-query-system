@@ -4,9 +4,9 @@ from config.database import Base
 import enum
 
 class UserType(enum.Enum):
-    atendente = "attendant"
-    enf_geral = "head_nurse"
-    medico = "doctor"
+    attendant = "attendant"
+    head_nurse = "head_nurse"
+    doctor = "doctor"
 
 class UserModel(Base):
     __tablename__ = 'employees'
