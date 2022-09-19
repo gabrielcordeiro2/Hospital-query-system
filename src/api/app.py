@@ -1,13 +1,20 @@
 from flask import Flask
-from models import ConsultaModel, InternacaoModel, PacienteModel, UserModel
+from flask_restful import Api
+from globals import importResource
+from config.database import Base, db_config
+from models.entities import *
+from resources.patient import Patient
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost:5432'
+app.config['SQLALCHEMY_DATABASE_URI'] = db_config["URI"]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+api = Api(app)
+conn = importResource('conn', 'config.database_instance')
+api.add_resource(Patient, '/patient/<string:info>')
+
 if __name__ == "__main__":
-    from config import banco
-    banco.init_app(app)
-    banco.create_all(app=app)
-    app.run(debug=True)
+
+    Base.metadata.create_all(conn.create_engine()) # Create DB
+    app.run(debug=False)
