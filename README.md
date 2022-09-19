@@ -1,7 +1,8 @@
 I'm using:
 - Flask (Rest Api)
-- Unit Tests
-- PostgreSQL
+- Pytest (Unit Tests)
+- PostgreSQL (Database)
+- SQLAlchemy (ORM)
 - Python
 
 
