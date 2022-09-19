@@ -1,14 +1,11 @@
-from models import UserModel, PacienteModel, ConsultaModel, InternacaoModel
-from config import banco, sessionmaker
-from numpy.random import randint
-from dotenv import load_dotenv
-from faker import Faker
 from time import time
-from os import getenv
+from faker import Faker
+from numpy.random import randint
+from config.database import DBConnection
+from models.entities import *
 
-start_time = time()
+start = time()
 fake = Faker()
-load_dotenv()
 
 def randomDate(start='-20y', end='now'):
     result = fake.date_between(
@@ -31,77 +28,77 @@ def positiveNum(ndigits):
         if num > 0:
             return num
 
-users = [
-    UserModel(usuario="ana", senha="batata123", tipo="atendente"),
-    UserModel(usuario="roberto19", senha="2468", tipo="enf_geral"),
-    UserModel(usuario="julian4", senha="854abc", tipo="medico"),
-    UserModel(usuario="lucas68", senha="hb8rh4", tipo="medico"),
-    UserModel(usuario="antonio29", senha="sorvete27", tipo="medico")
+employees = [
+    UserModel(user="ana", name="Ana Alves Toledo", password="batata123", type="attendant"),
+    UserModel(user="roberto19", name="Roberto Padilha", password="2468", type="head_nurse"),
+    UserModel(user="julian4", name="Julian Oliveira", password="854abc", type="doctor"),
+    UserModel(user="lucas68", name="Lucas de Paula Barros", password="hb8rh4", type="doctor"),
+    UserModel(user="antonio29", name="Antonio Benedito", password="sorvete27", type="doctor")
 ]
 
-pacientes = []
+patients = []
 for _ in range(1000): # Pacientes
-    paciente1 = PacienteModel(nome=fake.name(),
-                              cpf=randomNum(0,10,12),
-                              nascimento=randomDate(),
-                              telefone=randomNum(0,10,12),
-                              cartao_sus=randomNum(0,10,18))
-    pacientes.append(paciente1)
+    patient1 = PatientModel(
+                    name=fake.name(),
+                    cpf=randomNum(0,10,12),
+                    birthdate=randomDate(),
+                    phone=randomNum(0,10,12),
+                    sus_card=randomNum(0,10,18))
+    patients.append(patient1)
 
-consultas = []
+appointments = []
 for _ in range(1450): # Consultas
     if randint(0,9) != 0:
-        modificado = fake.random.choice([randomDateTime(), None])
-        medicamento = fake.random.choice([fake.word(), None])
-        compareceu = fake.random.choice([True, False, True])
-        descricao = fake.text(max_nb_chars=60)
-        medico = fake.random.choice([3,4,5])
+        modified = fake.random.choice([randomDateTime(), None])
+        drug = fake.random.choice([fake.word(), None])
+        attended = fake.random.choice([True, False, True])
+        description = fake.text(max_nb_chars=60)
+        doctor = fake.random.choice([3,4,5])
 
-        consulta1 = ConsultaModel(data_consulta=randomDateTime(),
-                                  paciente_compareceu=compareceu,
-                                  medico_id=medico,
-                                  paciente_id=positiveNum(3),
-                                  alergia_medicamento=medicamento,
-                                  descricao=descricao,
-                                  modificado_em=modificado)
-        consultas.append(consulta1)
+        appointment1 = AppointmentModel(
+                            appointment_date=randomDateTime(),
+                            patient_attended=attended,
+                            doctor_id=doctor,
+                            patient_id=positiveNum(3),
+                            drug_allergy=drug,
+                            description=description,
+                            modified_in=modified)
+        appointments.append(appointment1)
 
-internacoes = []
-for _ in range(1000): # Internacoes
+stay = []
+for _ in range(1000): # Stay
     if randint(0,9) == 0:
-        status = fake.random.choice(["alta", "observacao", "internado"])
-        quarto = f"{fake.random_letter().upper()}{positiveNum(2)}"
-        modificado = fake.random.choice([randomDateTime(), None])
-        medicamento = fake.random.choice([fake.word(), None])
-        descricao = fake.text(max_nb_chars=60)
-        medico = fake.random.choice([3,4,5])
+        status = fake.random.choice(["discharged", "observation", "admitted"])
+        room = f"{fake.random_letter().upper()}{positiveNum(2)}"
+        modified = fake.random.choice([randomDateTime(), None])
+        drug = fake.random.choice([fake.word(), None])
+        description = fake.text(max_nb_chars=60)
+        doctor_id = fake.random.choice([3,4,5])
 
-        internacao1 = InternacaoModel(data_internacao=randomDateTime(),
-                                      alergia_medicamento=medicamento,
-                                      descricao=descricao,
-                                      paciente_id=positiveNum(3),
-                                      medico_id=medico,
-                                      status=status,
-                                      quarto=quarto,
-                                      leito=positiveNum(1),
-                                      modificado_em=modificado)
-        internacoes.append(internacao1)
+        stay1 = StayModel(
+                        stay_date=randomDateTime(),
+                        drug_allergy=drug,
+                        description=description,
+                        patient_id=positiveNum(3),
+                        doctor_id=doctor_id,
+                        status=status,
+                        room=room,
+                        bed=positiveNum(1),
+                        modified_in=modified)
+        stay.append(stay1)
 
-url = getenv("DATABASE")
-engine = banco.create_engine(url, {})
-Session = sessionmaker(bind=engine)
-session = Session()
 
-session.bulk_save_objects(users)
-session.commit()
-session.bulk_save_objects(pacientes)
-session.commit()
-session.bulk_save_objects(consultas)
-session.commit()
-session.bulk_save_objects(internacoes)
-session.commit()
-session.close()
+with DBConnection() as db:
+    db.session.bulk_save_objects(employees)
+    db.session.commit()
+    db.session.bulk_save_objects(patients)
+    db.session.commit()
+    db.session.bulk_save_objects(appointments)
+    db.session.commit()
+    db.session.bulk_save_objects(stay)
+    db.session.commit()
+    db.session.close()
 
-print("Sucesso !!!")
-delta_time = time() - start_time
-print(f"A operação demorou {delta_time:.3f} segundos")
+delta = time() - start
+print("Success !!!")
+print(f"The operation took {delta:.3f} seconds")
