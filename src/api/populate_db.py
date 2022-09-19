@@ -97,7 +97,6 @@ with DBConnection() as db:
     db.session.commit()
     db.session.bulk_save_objects(stay)
     db.session.commit()
-    db.session.close()
 
 delta = time() - start
 print("Success !!!")
