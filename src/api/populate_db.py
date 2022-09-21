@@ -1,3 +1,4 @@
+from random import randrange
 from time import time
 from faker import Faker
 from numpy.random import randint
@@ -22,12 +23,6 @@ def randomNum(n1, n2, length):
     result = ''.join(str(x) for x in nums)
     return result
 
-def positiveNum(ndigits):
-    while True:
-        num = fake.random_number(digits=ndigits)
-        if num > 0:
-            return num
-
 employees = [
     UserModel(user="ana", name="Ana Alves Toledo", password="batata123", type="attendant"),
     UserModel(user="roberto19", name="Roberto Padilha", password="2468", type="head_nurse"),
@@ -47,7 +42,7 @@ for _ in range(1000): # Pacientes
     patients.append(patient1)
 
 appointments = []
-for _ in range(1450): # Consultas
+for _ in range(10000): # Consultas
     if randint(0,9) != 0:
         modified = fake.random.choice([randomDateTime(), None])
         drug = fake.random.choice([fake.word(), None])
@@ -59,7 +54,7 @@ for _ in range(1450): # Consultas
                             appointment_date=randomDateTime(),
                             patient_attended=attended,
                             doctor_id=doctor,
-                            patient_id=positiveNum(3),
+                            patient_id=randrange(1,1001),
                             drug_allergy=drug,
                             description=description,
                             modified_in=modified)
@@ -69,24 +64,23 @@ stay = []
 for _ in range(1000): # Stay
     if randint(0,9) == 0:
         status = fake.random.choice(["discharged", "observation", "admitted"])
-        room = f"{fake.random_letter().upper()}{positiveNum(2)}"
+        room = f"{fake.random_letter().upper()}{randrange(1,100)}"
         modified = fake.random.choice([randomDateTime(), None])
         drug = fake.random.choice([fake.word(), None])
         description = fake.text(max_nb_chars=60)
         doctor_id = fake.random.choice([3,4,5])
 
         stay1 = StayModel(
-                        stay_date=randomDateTime(),
-                        drug_allergy=drug,
-                        description=description,
-                        patient_id=positiveNum(3),
-                        doctor_id=doctor_id,
-                        status=status,
-                        room=room,
-                        bed=positiveNum(1),
-                        modified_in=modified)
+                    stay_date=randomDateTime(),
+                    drug_allergy=drug,
+                    description=description,
+                    patient_id=randrange(1,1001),
+                    doctor_id=doctor_id,
+                    status=status,
+                    room=room,
+                    bed=randrange(1,10),
+                    modified_in=modified)
         stay.append(stay1)
-
 
 with DBConnection() as db:
     db.session.bulk_save_objects(employees)
