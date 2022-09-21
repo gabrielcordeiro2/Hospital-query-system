@@ -1,9 +1,7 @@
 from flask import jsonify
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from globals import importResource
 from repository.patient import PatientRepository
-
-from flask_restful import reqparse
 
 conn = importResource('conn', 'config.database_instance')
 
