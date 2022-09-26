@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Tuple
 from config.database import DBConnection
 from models.appointment import AppointmentModel
@@ -6,7 +7,7 @@ from models.patient import PatientModel
 
 class PatientRepository:
     ''' Manage all queries about patients and his appointments '''
-
+    
     def __init__(self, db):
         self.db = db
 
@@ -26,16 +27,25 @@ class PatientRepository:
             ).all()
         return patient_query
 
+    def find_patient_id(self, info: str):
+        patient_query = self.db.session\
+            .query(PatientModel.id)\
+            .filter(
+                (PatientModel.name == str(info)) |
+                (PatientModel.cpf == str(info)) |
+                (PatientModel.sus_card == str(info))
+            ).first()
+        return patient_query
+
     def register_patient(self, name, cpf, birthdate, phone, sus_card):
-        with DBConnection() as db:
             register_info = PatientModel(
                 name=name,
                 cpf=cpf, 
                 birthdate=birthdate,
                 phone=phone,
                 sus_card=sus_card)
-            db.session.add(register_info)
-            db.session.commit()
+            self.db.session.add(register_info)
+            self.db.session.commit()
 
     def update_patient_info(self, info, name=None, cpf=None, birthdate=None, phone=None, sus_card=None):
         ''' Update Patient info searching by "cpf" or "sus_card" '''
@@ -71,3 +81,25 @@ class PatientRepository:
                 UserModel.name.label('doctor_name')
             ).all()
         return appointment_query
+
+    def schedule_appointment(
+        self,
+        appointment_date,
+        patient_id,
+        doctor_id,
+        patient_attended=None,
+        drug_allergy=None,
+        description=None):
+
+        now = datetime.now()
+
+        appointment = AppointmentModel(
+            appointment_date=appointment_date,
+            patient_id=patient_id,
+            doctor_id=doctor_id,
+            patient_attended=patient_attended,
+            drug_allergy=drug_allergy,
+            description=description,
+            modified_in=str(now))
+        self.db.session.add(appointment)
+        self.db.session.commit()

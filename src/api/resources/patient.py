@@ -1,4 +1,4 @@
-from flask import jsonify
+from typing import Dict, List
 from flask_restful import Resource, reqparse
 from globals import importResource
 from repository.patient import PatientRepository
@@ -19,7 +19,7 @@ class Patient(Resource):
         print('Patient was instantiated')
         self.repo = PatientRepository(conn)
 
-    def get(self, info: str):
+    def get(self, info: str) -> List:
         response = self.repo.find_patient(info)
         result = []
 
@@ -37,10 +37,9 @@ class Patient(Resource):
             return result
         return {'message': 'User not found'}, 404
 
-    def put(self, info):
+    def put(self, info: str) -> Dict:
         data = self.arguments.parse_args()
         patient_found = self.repo.find_patient(info)
-        print(patient_found)
 
         if patient_found:
             self.repo.update_patient_info(info, **data)
@@ -61,7 +60,7 @@ class PatientRegister(Resource):
         print('Patient was instantiated')
         self.repo = PatientRepository(conn)
 
-    def post(self):
+    def post(self) -> Dict:
         data = self.arguments.parse_args()
         cpf_found = self.repo.find_patient(data.get('cpf'))
         sus_card_found = self.repo.find_patient(data.get('sus_card'))
@@ -78,121 +77,3 @@ class PatientRegister(Resource):
 
         self.repo.register_patient(**data)
         return {'message': 'Patient created successfully!'}, 201
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # def get(self, info): # all patients and his appointments method 1
-    #     ''' Get all patients with "info" and his appointments '''
-    #     response_patient = self.repo.find_patient(info)
-    #     response_appointments = self.repo.find_appointments(info)
-
-    #     result = []
-    #     for patient in response_patient:
-
-    #         appointments = []
-    #         for appointment in response_appointments:
-
-    #             json_appointment = {
-    #                 'patient_name': appointment.patient_name,
-    #                 'appointment_date': str(appointment.appointment_date),
-    #                 'patient_attended': appointment.patient_attended,
-    #                 'doctor_name': appointment.doctor_name
-    #             }
-    #             appointments.append(json_appointment)
-
-    #         json_info = {
-    #             'name': patient.name,
-    #             'birthdate': str(patient.birthdate),
-    #             'cpf': patient.cpf,
-    #             'phone': patient.phone,
-    #             'sus_card': patient.sus_card,
-    #             'appointments': appointments
-    #         }
-    #         result.append(json_info)
-
-    #     if result:
-    #         return result
-    #     return {'message': 'user not found'}, 404
-
-    # def get(self, info): # all patients and his appointments method 2
-    #     ''' Get all patients with "info" and his appointments '''
-    #     response_patient = self.repo.find_patient(info)
-    #     response_appointments = self.repo.find_appointments(info)
-
-    #     result = []
-    #     appointments = []
-
-    #     for appointment in response_appointments:
-    #         json_appointment = {
-    #             'patient_name': appointment.patient_name,
-    #             'appointment_date': str(appointment.appointment_date),
-    #             'patient_attended': appointment.patient_attended,
-    #             'doctor_name': appointment.doctor_name
-    #         }
-    #         appointments.append(json_appointment)
-
-    #     for patient in response_patient:
-    #         json_patient = {
-    #             'name': patient.name,
-    #             'birthdate': str(patient.birthdate),
-    #             'cpf': patient.cpf,
-    #             'phone': patient.phone,
-    #             'sus_card': patient.sus_card,
-    #             'appointments': appointments
-    #         }
-    #         result.append(json_patient)
-
-    #     if result:
-    #         return result
-    #     return {'message': 'user not found'}, 404
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # # def put(self, paciente_id, option=5):
-        
-    # #     url = db_config["URI"]
-    # #     engine = banco.create_engine(url, {})
-    # #     Session = sessionmaker(bind=engine)
-    # #     session = Session()
-
-    # #     if option == 5: # jeito correto, só falta formatar.
-    # #         response = session.query(PacienteModel).filter(PacienteModel.id == paciente_id).first() # retorna resultado
-    # #         #response = session.query(PacienteModel).all() # retorna lista de resultados
-    # #         if response:
-    # #             return str(response.nome)
-    # #         else:
-    # #             return "not found", 404
-
