@@ -4,7 +4,7 @@ from globals import importResource
 from config.database import Base, db_config
 from models.entities import *
 from resources.patient import Patient, PatientRegister
-from resources.appointment import Appointment, AppointmentRegister
+from resources.appointment import Appointment, AppointmentRegister, AppointmentUpdate
 
 app = Flask(__name__)
 
@@ -17,6 +17,7 @@ api.add_resource(Patient, '/patient/<string:info>')
 api.add_resource(PatientRegister, '/patient/register')
 api.add_resource(Appointment, '/appointment/<string:info>')
 api.add_resource(AppointmentRegister, '/appointment/schedule')
+api.add_resource(AppointmentUpdate, '/appointment/<string:appointment_id>')
 
 if __name__ == "__main__":
 

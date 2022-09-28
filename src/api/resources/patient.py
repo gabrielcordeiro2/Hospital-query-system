@@ -41,10 +41,10 @@ class Patient(Resource):
         data = self.arguments.parse_args()
         patient_found = self.repo.find_patient(info)
 
-        if patient_found:
+        if patient_found and patient_found[0].name != info:
             self.repo.update_patient_info(info, **data)
             return {'message': 'Patient updated successfully!'}, 200
-        return {"message": "Patient not found."}, 404
+        return {"message": f"Oops, '{info}' patient info not found."}, 404
 
 class PatientRegister(Resource):
     ''' Create Patient endpoint method '''
