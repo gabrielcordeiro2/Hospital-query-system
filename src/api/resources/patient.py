@@ -5,19 +5,22 @@ from repository.patient import PatientRepository
 
 conn = importResource('conn', 'config.database_instance')
 
-class Patient(Resource):
-    ''' Find or Update Patients info endpoint methods '''
+def resource_arguments():
     arguments = reqparse.RequestParser()
     arguments.add_argument('name', type=str, required=True, help="The field 'name' cannot be left blank.")
     arguments.add_argument('cpf')
     arguments.add_argument('birthdate')
     arguments.add_argument('phone')
     arguments.add_argument('sus_card')
+    return arguments
 
+class Patient(Resource):
+    ''' Find or Update Patients info endpoint methods '''
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         print('Patient was instantiated')
         self.repo = PatientRepository(conn)
+        self.arguments = resource_arguments()
 
     def get(self, info: str) -> List:
         response = self.repo.find_patient(info)
@@ -48,17 +51,11 @@ class Patient(Resource):
 
 class PatientRegister(Resource):
     ''' Create Patient endpoint method '''
-    arguments = reqparse.RequestParser()
-    arguments.add_argument('name', type=str, required=True, help="The field 'name' cannot be left blank.")
-    arguments.add_argument('cpf')
-    arguments.add_argument('birthdate')
-    arguments.add_argument('phone')
-    arguments.add_argument('sus_card')
-
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         print('Patient was instantiated')
         self.repo = PatientRepository(conn)
+        self.arguments = resource_arguments()
 
     def post(self) -> Dict:
         data = self.arguments.parse_args()
