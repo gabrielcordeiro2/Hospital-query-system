@@ -7,7 +7,6 @@ from models.patient import PatientModel
 
 class PatientRepository:
     ''' Manage all queries about patients and his appointments '''
-    
     def __init__(self, db):
         self.db = db
 
@@ -75,6 +74,7 @@ class PatientRepository:
                 (PatientModel.cpf == str(info)) |
                 (PatientModel.sus_card == str(info))
             ).with_entities(
+                AppointmentModel.id,
                 PatientModel.name.label('patient_name'),
                 AppointmentModel.appointment_date,
                 AppointmentModel.patient_attended,
@@ -103,3 +103,26 @@ class PatientRepository:
             modified_in=str(now))
         self.db.session.add(appointment)
         self.db.session.commit()
+
+    def update_appointment_info(self, appointment_id, patient_id, date, doctor_id):
+        with DBConnection() as db:
+            query = db.session\
+                .query(AppointmentModel)\
+                .filter(
+                    AppointmentModel.id == str(appointment_id)
+                ).update({
+                    "patient_id": str(patient_id),
+                    "appointment_date": str(date),
+                    "patient_attended": False,
+                    "doctor_id": str(doctor_id)
+                })
+            db.session.commit()
+
+    def find_appointment_id(self, appointment_id):
+        with DBConnection() as db:
+            query = db.session\
+                .query(AppointmentModel.id)\
+                .filter(
+                    AppointmentModel.id == str(appointment_id)
+                ).first()
+            return query

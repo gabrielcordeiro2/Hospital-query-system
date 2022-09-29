@@ -43,6 +43,7 @@ class Appointment(Resource):
 
         for appointment in response:
             json_appointment = {
+                "Appointment_id": str(appointment.id),
                 "patient_name": appointment.patient_name,
                 "appointment_date": str(appointment.appointment_date),
                 "patient_attended": appointment.patient_attended,
@@ -99,3 +100,49 @@ class AppointmentRegister(Resource):
             )
             return {'message': 'Appointment successfully scheduled!'}, 201
         return {'message': 'Error, patient or doctor information not found.'}, 404
+
+class AppointmentUpdate(Resource):
+    ''' Update Appointment endpoint method '''
+    arguments = reqparse.RequestParser()
+    arguments.add_argument(
+        "appointment_date",
+        type=str,
+        required=True,
+        help="The field 'appointment_date' cannot be left blank.")
+    arguments.add_argument(
+        "patient_info",
+        type=str,
+        required=True,
+        help="The field 'patient_id' cannot be left blank.")
+    arguments.add_argument(
+        "doctor_name",
+        type=str,
+        required=True,
+        help="The field 'doctor_id' cannot be left blank.")
+    arguments.add_argument("patient_attended", default=None, type=bool)
+    arguments.add_argument("drug_allergy", default=None, type=str)
+    arguments.add_argument("description", default=None, type=str)
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        print("Appointment was instantiated")
+        self.repo = PatientRepository(conn)
+        self.repo2 = EmployeeRepository(conn)
+
+    def put(self, appointment_id):
+        data = self.arguments.parse_args()
+        patient_found = self.repo.find_patient_id(data.get('patient_info'))
+        doctor_found = self.repo2.find_doctor_id(data.get('doctor_name'))
+        
+        if patient_found and doctor_found:
+            appointment_found = self.repo.find_appointment_id(appointment_id=appointment_id)
+            if appointment_found:
+                self.repo.update_appointment_info(
+                    appointment_id=appointment_found.id,
+                    patient_id=patient_found.id,
+                    doctor_id=doctor_found.id,
+                    date=data.get('appointment_date')
+                )
+                return {'message': 'Appointment updated successfully!'}, 200
+            return {'message': 'Error, Appointment not found.'}, 404
+        return {'message': 'Error, patient or doctor information not found.'}, 404 
