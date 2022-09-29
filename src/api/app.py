@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Api
-from config.database import Base, db_config, DBConnection
+from config.database import db_config, create_db
 from models.entities import *
 from resources.patient import Patient, PatientRegister
 from resources.appointment import Appointment, AppointmentRegister, AppointmentUpdate
@@ -18,5 +18,5 @@ api.add_resource(AppointmentRegister, '/appointment/schedule')
 api.add_resource(AppointmentUpdate, '/appointment/update/<string:appointment_id>')
 
 if __name__ == "__main__":
-    Base.metadata.create_all(DBConnection().create_engine()) # Create DB
+    create_db()
     app.run(debug=True)

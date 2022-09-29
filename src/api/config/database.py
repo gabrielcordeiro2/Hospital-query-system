@@ -31,3 +31,8 @@ class DBConnection:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.session.close()
         print("exit")
+
+def create_db():
+    database = Base.metadata.create_all(DBConnection().create_engine())
+    return database
+    
