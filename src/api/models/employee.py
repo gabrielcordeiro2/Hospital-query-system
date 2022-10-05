@@ -14,5 +14,5 @@ class UserModel(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), nullable=False)
     user = Column(String(10), nullable=False, unique=True)
-    password = Column(String(20), nullable=False)
+    password = Column(String(128), nullable=False)
     type = Column(Enum(UserType), nullable=False)

@@ -4,6 +4,7 @@ from globals import importResource
 from repository.employee import EmployeeRepository
 from repository.patient import PatientRepository
 from repository.stay import StayRepository
+from flask_jwt_extended import jwt_required
 
 conn = importResource('conn', 'config.database_instance')
 
@@ -27,6 +28,7 @@ class Stay(Resource):
         self.repo2 = PatientRepository(conn)
         self.arguments = resource_arguments()
 
+    @jwt_required()
     def get(self, info):
         patient_found = self.repo2.find_patient_id(info)
 
@@ -61,6 +63,7 @@ class StayRegister(Resource):
         self.repo3 = StayRepository(conn)
         self.arguments = resource_arguments()
 
+    @jwt_required()
     def post(self):
         data = self.arguments.parse_args()
         patient_found = self.repo.find_patient_id(data.get('patient_info'))
@@ -88,6 +91,7 @@ class StayUpdate(Resource):
         self.repo3 = EmployeeRepository(conn)
         self.arguments = resource_arguments()
 
+    @jwt_required()
     def put(self, stay_id):
         data = self.arguments.parse_args()
         patient_found = self.repo2.find_patient_id(data.get('patient_info'))

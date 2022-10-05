@@ -4,6 +4,7 @@ from globals import importResource
 from repository.employee import EmployeeRepository
 from repository.patient import PatientRepository
 from repository.appointment import AppointmentRepository
+from flask_jwt_extended import jwt_required
 
 conn = importResource("conn", "config.database_instance")
 
@@ -39,6 +40,7 @@ class Appointment(Resource):
         print("Appointment was instantiated")
         self.repo = AppointmentRepository(conn)
 
+    @jwt_required()
     def get(self, info: str) -> List:
         response = self.repo.find_appointments(info)
         result = []
@@ -67,6 +69,7 @@ class AppointmentRegister(Resource):
         self.repo3 = AppointmentRepository(conn)
         self.arguments = resource_arguments()
 
+    @jwt_required()
     def post(self):
         data = self.arguments.parse_args()
         patient_found = self.repo.find_patient_id(data.get('patient_info'))
@@ -94,6 +97,7 @@ class AppointmentUpdate(Resource):
         self.repo3 = AppointmentRepository(conn)
         self.arguments = resource_arguments()
 
+    jwt_required()
     def put(self, appointment_id):
         data = self.arguments.parse_args()
         patient_found = self.repo.find_patient_id(data.get('patient_info'))

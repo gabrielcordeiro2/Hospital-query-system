@@ -2,6 +2,7 @@ from typing import Dict, List
 from flask_restful import Resource, reqparse
 from globals import importResource
 from repository.patient import PatientRepository
+from flask_jwt_extended import jwt_required
 
 conn = importResource('conn', 'config.database_instance')
 
@@ -22,6 +23,7 @@ class Patient(Resource):
         self.repo = PatientRepository(conn)
         self.arguments = resource_arguments()
 
+    @jwt_required()
     def get(self, info: str) -> List:
         response = self.repo.find_patient(info)
         result = []
@@ -40,6 +42,7 @@ class Patient(Resource):
             return result
         return {'message': 'User not found'}, 404
 
+    @jwt_required()
     def put(self, info: str) -> Dict:
         data = self.arguments.parse_args()
         patient_found = self.repo.find_patient(info)
@@ -57,6 +60,7 @@ class PatientRegister(Resource):
         self.repo = PatientRepository(conn)
         self.arguments = resource_arguments()
 
+    @jwt_required()
     def post(self) -> Dict:
         data = self.arguments.parse_args()
         cpf_found = self.repo.find_patient(data.get('cpf'))
