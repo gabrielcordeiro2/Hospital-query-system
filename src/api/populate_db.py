@@ -2,6 +2,7 @@ from random import randrange
 from time import time
 from faker import Faker
 from numpy.random import randint
+from werkzeug.security import generate_password_hash
 from config.database import DBConnection
 from models.entities import *
 
@@ -23,12 +24,16 @@ def randomNum(n1, n2, length):
     result = ''.join(str(x) for x in nums)
     return result
 
+def hash_pwd(password):
+    password_hashed = generate_password_hash(password, method='sha256')
+    return password_hashed
+
 employees = [
-    UserModel(user="ana", name="Ana Alves Toledo", password="batata123", type="attendant"),
-    UserModel(user="roberto19", name="Roberto Padilha", password="2468", type="head_nurse"),
-    UserModel(user="julian4", name="Julian Oliveira", password="854abc", type="doctor"),
-    UserModel(user="lucas68", name="Lucas de Paula Barros", password="hb8rh4", type="doctor"),
-    UserModel(user="antonio29", name="Antonio Benedito", password="sorvete27", type="doctor")
+    UserModel(user="ana", name="Ana Alves Toledo", password=hash_pwd("batata123"), type="attendant"),
+    UserModel(user="roberto19", name="Roberto Padilha", password=hash_pwd("2468"), type="head_nurse"),
+    UserModel(user="julian4", name="Julian Oliveira", password=hash_pwd("854abc"), type="doctor"),
+    UserModel(user="lucas68", name="Lucas de Paula Barros", password=hash_pwd("hb8rh4"), type="doctor"),
+    UserModel(user="antonio29", name="Antonio Benedito", password=hash_pwd("sorvete27"), type="doctor")
 ]
 
 patients = []
