@@ -1,6 +1,4 @@
-from ast import Str
 from datetime import datetime
-from config.database import DBConnection
 from models.employee import UserModel
 from models.patient import PatientModel
 from models.stay import StayModel
