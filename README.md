@@ -38,6 +38,7 @@ You will need to install all dependencies to run:
 ## How to use
 
 - You can found my documentation [here](https://documenter.getpostman.com/view/21448782/2s83ziMiKD).
+- Run `src/api/app.py` to start API Server.
 - All endpoint methods, except `/login` needs a JWT Token to use.
 
 ## Skills that i learned:
