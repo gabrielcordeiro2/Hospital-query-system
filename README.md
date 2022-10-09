@@ -8,7 +8,7 @@ I'm using:
 
 | UML Database diagram |
 |:--:|
-|![space-1.jpg](https://user-images.githubusercontent.com/100642061/190045732-5ace3514-f4bf-40e9-afed-5c17bb79f92d.png)|
+|![space-1.jpg](https://user-images.githubusercontent.com/100642061/194748406-81511f29-45a6-4654-af31-9c6cc565457d.png)|
 The project is under construction, news coming soon.
 
 <div align="center">
