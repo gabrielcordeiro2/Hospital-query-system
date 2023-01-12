@@ -43,9 +43,9 @@ You will need to install all dependencies below to run:
 - Run `src/api/app.py` to start API Server.
 - All endpoint methods, except `/login` needs a JWT Token to use.
 
-## Skills that i learned:
+## Skills that I learned:
 
-- **Database manage**
+- **Database management**
 
   Using: PostgreSQL, SQLAlchemy (ORM), Database modeling (UML Diagram).
 
