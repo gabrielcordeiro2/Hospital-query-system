@@ -6,7 +6,7 @@
 4. Run `docker build -t hospital_image .` in terminal.
 5. Run this command to create Postgres Container:
 ```
-docker run -d --name postgresDB -v postgresVolumeDB:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres
+docker run -d --name postgresNet --network mynetwork -v postgresVolumeNet:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres postgres
 ```
 5. Run this command to create API Container:
 ```
