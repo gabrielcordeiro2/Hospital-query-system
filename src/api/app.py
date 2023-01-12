@@ -3,7 +3,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from config.blacklist import BLACKLIST
-from config.database import create_db, db_config
+from config.database import create_db, app_config
 from models.entities import *
 from resources.appointment import Appointment, AppointmentRegister, AppointmentUpdate
 from resources.patient import Patient, PatientRegister
@@ -12,7 +12,7 @@ from resources.user import UserLogin, UserLogout, UserRegister
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = db_config["URI"]
+app.config['SQLALCHEMY_DATABASE_URI'] = app_config["URI"]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'DontTellAnyone'
 app.config['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=14)
@@ -42,5 +42,7 @@ api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')
 
 if __name__ == "__main__":
+    host = app_config['API_HOST']
+    port = app_config['API_PORT']
     create_db()
-    app.run(debug=True)
+    app.run(debug=True, host=host, port=port)

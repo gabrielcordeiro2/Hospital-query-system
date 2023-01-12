@@ -16,7 +16,6 @@ class UserRegister(Resource):
         self.arguments.add_argument('password', type=str, required=True, help="The field 'password' cannot be left blank.")
         self.repo = EmployeeRepository(conn)
 
-    @jwt_required()
     def post(self):
         data = self.arguments.parse_args()
         user_found = self.repo.find_by_login(data.get('user'))
