@@ -19,9 +19,11 @@ I made a Hospital query system, which manages general tasks that occur in daily 
 
 I wanted to challenge myself to do a different type of portfolio project, as I learned about the Backend, I was curious about how the systems that served me on a day-to-day basis worked, and from that came the idea of making a hospital system.
 
-
 ## Requirements to run:
-You will need to install all dependencies to run:
+
+**(Optional)** If you want to run this project using **Docker**, click [here](https://github.com/gabrielcordeiro2/Hospital-query-system/blob/main/UsingDocker.MD).
+
+You will need to install all dependencies below to run:
 
 ### for Python:
 
@@ -49,7 +51,7 @@ You will need to install all dependencies to run:
 
 - **Python Backend development**
   
-  Using: Flask, REST Apis, JWT Auth, MVC like.
+  Using: Docker, Flask, REST Apis, JWT Auth.
 
 - **Rest API Documentation**
   
