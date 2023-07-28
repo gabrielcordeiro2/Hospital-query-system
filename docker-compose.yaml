@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  postgresNet:
+    image: postgres
+    container_name: postgresNet
+    networks:
+      - mynetwork
+    volumes:
+      - postgresVolumeNet:/var/lib/postgresql/data
+    # ports:
+    #   - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=123
+
+  api_container:
+    image: hospital_image
+    container_name: api_container
+    networks:
+      - mynetwork
+    ports:
+      - 5000:5000
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=5000
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  postgresVolumeNet:

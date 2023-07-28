@@ -4,21 +4,27 @@
 2. Create a `.env` file inside root project, containing `DATABASE_URI=postgresql://postgres:123@postgresNet:5432/postgres`
 3. Enter inside project's folder using `cd Hospital-query-system`
 4. Run `docker build -t hospital_image .` in terminal.
-5. Run this command to create Postgres Container:
+
+5. Run this command to execute both api_container and PostgresNet:
 ```
-docker run -d --name postgresNet --network mynetwork -v postgresVolumeNet:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres postgres
+docker compose up
 ```
-5. Run this command to create API Container:
+
+Run this command below to populate database with sample data:
 ```
-docker run -d --name api_container --network mynetwork -p 5000:5000 -e API_HOST=0.0.0.0 -e API_PORT=5000 hospital_image
+docker exec -it api_container python ./src/api/populate_db.py
 ```
+
 Docker Container names are respectively:
 1. `api_container` runs the API.
 2. `postgresNet` runs the Postgres Database.
 
-- use `docker stop container_name` to stop this service.
-- use `docker start container_name` to start this service.
-- use `docker rm container_name` to delete this service.
+- use `docker exec -it api_container bash` to enter inside api container.
+- use `docker compose up` to start this service.
+- use `docker compose down` to delete this service.
+- use `docker compose restart` to restart this service.
+
+If you want to expose PostgresNet to localhost, please uncomment ports section in `docker-compose.yaml`
 
 ## How to use
 
