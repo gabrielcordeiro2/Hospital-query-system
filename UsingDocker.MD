@@ -56,9 +56,9 @@ If you want to expose PostgresNet to localhost, please uncomment ports section i
 | ER Database diagram |
 |:--:|
 |![space-1.jpg](https://user-images.githubusercontent.com/100642061/194748406-81511f29-45a6-4654-af31-9c6cc565457d.png)|
-I made this UML diagram using [LucidApp](https://lucid.app/documents#/dashboard).
+I made this diagram using [LucidApp](https://lucid.app/documents#/dashboard).
 
 | Kubernetes cluster diagram |
 |:--:|
 |![kubernetes-1.jpg](https://github.com/gabrielcordeiro2/Hospital-query-system/assets/100642061/2b9f8a31-111a-4727-b6ba-a49b5e959900)|
-I made this UML diagram using [LucidApp](https://lucid.app/documents#/dashboard).
+I made this diagram using [LucidApp](https://lucid.app/documents#/dashboard).
