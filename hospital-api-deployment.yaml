@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hospital-api-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: hospital-api
+      labels:
+        app: hospital-system
+    spec:
+      containers:
+        - name: hospital-api-container
+          image: gabrielcordeiro2/hospital-api:1
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: hospital-api-configmap
+          resources:
+            limits:
+              memory: 700Mi
+              cpu: 600m
+            requests:
+              memory: 200Mi
+              cpu: 200m
+  selector:
+    matchLabels:
+      app: hospital-system

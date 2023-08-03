@@ -23,6 +23,8 @@ I wanted to challenge myself to do a different type of portfolio project, as I l
 
 **(Optional)** If you want to run this project using **Docker**, click [here](https://github.com/gabrielcordeiro2/Hospital-query-system/blob/main/UsingDocker.MD).
 
+**(Optional)** If you want to run this project using **Kubernetes**, click [here](https://github.com/gabrielcordeiro2/Hospital-query-system/blob/main/UsingKubernetes.MD).
+
 You will need to install all dependencies below to run:
 
 ### for Python:
@@ -35,7 +37,7 @@ You will need to install all dependencies below to run:
 
 1.  PostgreSQL
 2.  postgres empty database called as `postgres` with port `5432`
-3.  `.env` file created inside project, containing `DATABASE_URI=postgresql://postgres:123@localhost:5432/postgres`
+3.  `.env` file created in project, containing `DATABASE_URI=postgresql://postgres:123@localhost:5432/postgres`
 
 ## How to use
 
@@ -44,22 +46,30 @@ You will need to install all dependencies below to run:
 - All endpoint methods, except `/login` needs a JWT Token to use.
 - If you want to populate the database, run `src/api/populate_db.py`
 
-## Skills that I learned:
+## Skills that i learned:
 
-- **Database management**
+- **Database manage**
 
-  Using: PostgreSQL, SQLAlchemy (ORM), Database modeling (UML Diagram).
+  Using: PostgreSQL, SQLAlchemy (ORM), Database modeling (ER Diagram).
 
-- **Python Backend development**
+- **Backend development**
   
-  Using: Docker, Flask, REST Apis, JWT Auth.
+  Using: Python, Flask, REST Apis, JWT Auth.
+
+- **Devops**
+
+  Using: Docker, Kubernetes, Shell Script.
 
 - **Rest API Documentation**
   
   Using: Postman and ThunderClient.
   
-  
-| UML Database diagram |
+| ER Database diagram |
 |:--:|
 |![space-1.jpg](https://user-images.githubusercontent.com/100642061/194748406-81511f29-45a6-4654-af31-9c6cc565457d.png)|
+I made this UML diagram using [LucidApp](https://lucid.app/documents#/dashboard).
+
+| Kubernetes cluster diagram |
+|:--:|
+|![kubernetes-1.jpg](https://github.com/gabrielcordeiro2/Hospital-query-system/assets/100642061/2b9f8a31-111a-4727-b6ba-a49b5e959900)|
 I made this UML diagram using [LucidApp](https://lucid.app/documents#/dashboard).
