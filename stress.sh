@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
-# Verificar se o IP foi fornecido
 if [ -z "$1" ]; then
   echo "Please, provide cluster ip as parameter"
   echo "Example: $0 123.123.12.1"
