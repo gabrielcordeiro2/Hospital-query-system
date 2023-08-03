@@ -23,7 +23,7 @@ I wanted to challenge myself to do a different type of portfolio project, as I l
 
 **(Optional)** If you want to run this project using **Docker**, click [here](https://github.com/gabrielcordeiro2/Hospital-query-system/blob/main/UsingDocker.MD).
 
-**(Optional)** If you want to run this project using **Kubernetes**, click [here](https://github.com/gabrielcordeiro2/Hospital-query-system/blob/main/UsingKubernetes.MD).
+**(Optional)** If you want to run this project using **Kubernetes**, click [here](https://github.com/gabrielcordeiro2/Hospital-query-system/blob/main/UsingKubernetes.md).
 
 You will need to install all dependencies below to run:
 
